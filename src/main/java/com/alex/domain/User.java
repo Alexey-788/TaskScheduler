@@ -9,13 +9,20 @@ public class User {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_gen")
     private long id;
     private String name;
+    @Column(unique=true)
     private String login;
     private String password;
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
 
-    public User(String name, String login, String password) {
+    public User(String name, String login, String password, Role role, Status status) {
         this.name = name;
         this.login = login;
         this.password = password;
+        this.role = role;
+        this.status = status;
     }
 
     public User() {
@@ -51,6 +58,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
