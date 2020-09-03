@@ -1,0 +1,23 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<form action="/task/add" method="post">
+    <a href="/task/list">Back</a>
+    <h4>Adding</h4>
+    <p>Task Name:</p>
+    <input name="taskName" required/>
+    <p>Task Text:</p>
+    <input name="taskText" required>
+    <h5>Time to complete</h5>
+    <p>Amount of days:</p>
+    <input name="days" type="number" min="0" max="100" required>
+    <p>Amount of hours:</p>
+    <input name="hours" type="number" min="0" max="100" required>
+    <button type="submit">Add</button>
+</form>
+</body>
+</html>

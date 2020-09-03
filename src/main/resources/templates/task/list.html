@@ -1,0 +1,21 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+</head>
+<body>
+<p th:text="${username}"/>
+<a href="/auth/logout">Logout</a>
+<a href="/task/add">Add</a>
+<h4>Task List</h4>
+<ul>
+    <li th:each="task: ${tasks}">
+        <p th:text="${task.name}"/>
+<!--        Display date (dd-mm-yyyy)-->
+        <p th:text="${task.deadline.get(T(java.util.Calendar).DATE)}+'-'+(${task.deadline.get(T(java.util.Calendar).MONTH)}+1)+'-'+${task.deadline.get(T(java.util.Calendar).YEAR)}"/>
+    </li>
+</ul>
+
+</body>
+</html>

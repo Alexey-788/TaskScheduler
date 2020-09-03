@@ -1,6 +1,8 @@
 package com.alex.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -16,6 +18,9 @@ public class User {
     private Role role;
     @Enumerated(value = EnumType.STRING)
     private Status status;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
 
     public User(String name, String login, String password, Role role, Status status) {
         this.name = name;
@@ -74,6 +79,14 @@ public class User {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

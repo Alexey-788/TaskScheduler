@@ -1,5 +1,6 @@
 package com.alex.config;
 
+import com.alex.domain.Permission;
 import com.alex.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -27,15 +28,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
+                    .antMatchers("/auth/registration").permitAll()
                     .anyRequest()
                     .authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/auth/login")
+                    .defaultSuccessUrl("/task/list")
                     .permitAll()
                 .and()
                     .logout()
-                    .logoutSuccessUrl("/auth/login")
+                    .logoutUrl("/auth/logout")
                     .permitAll();
     }
 
