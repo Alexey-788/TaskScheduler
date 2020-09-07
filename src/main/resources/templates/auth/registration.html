@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
 </head>
 <body>
 
+<p th:text="${error}"/>
 <form action="/auth/registration" method="post">
     <p>Username:</p>
     <input name="name" required>

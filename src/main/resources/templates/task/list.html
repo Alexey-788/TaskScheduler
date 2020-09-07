@@ -11,9 +11,9 @@
 <h4>Task List</h4>
 <ul>
     <li th:each="task: ${tasks}">
-        <p th:text="${task.name}"/>
-<!--        Display date (dd-mm-yyyy)-->
-        <p th:text="${task.deadline.get(T(java.util.Calendar).DATE)}+'-'+(${task.deadline.get(T(java.util.Calendar).MONTH)}+1)+'-'+${task.deadline.get(T(java.util.Calendar).YEAR)}"/>
+        <span style="color:red;" th:if="${currentDate.after(task.deadline)}">!</span><a th:href="'/task/details/'+${task.id}" th:text="${task.name}"/>
+<!--        Display date of creation (dd-mm-yyyy)-->
+        <p th:text="${currentDate.get(T(java.util.Calendar).DATE)}+'-'+(${currentDate.get(T(java.util.Calendar).MONTH)}+1)+'-'+${currentDate.get(T(java.util.Calendar).YEAR)}"/>
     </li>
 </ul>
 

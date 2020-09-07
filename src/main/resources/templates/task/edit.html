@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<a th:href="'/task/details/'+${task.id}">Back</a>
+<form action="/task/edit" method="post">
+    <h5>Task Name:</h5>
+    <input name="taskName" th:value="${task.name}">
+    <h5>Task Text:</h5>
+    <input name="taskText" th:value="${task.text}">
+    <button type="submit">Edit</button>
+    <input name="taskId" th:value="${task.id}" type="hidden">
+</form>
+
+</body>
+</html>

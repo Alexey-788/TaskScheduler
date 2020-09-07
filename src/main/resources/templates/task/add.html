@@ -2,21 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Add</title>
 </head>
 <body>
 <form action="/task/add" method="post">
     <a href="/task/list">Back</a>
     <h4>Adding</h4>
-    <p>Task Name:</p>
+    <h5>Task Name:</h5>
     <input name="taskName" required/>
-    <p>Task Text:</p>
+    <h5>Task Text:</h5>
     <input name="taskText" required>
-    <h5>Time to complete</h5>
-    <p>Amount of days:</p>
-    <input name="days" type="number" min="0" max="100" required>
-    <p>Amount of hours:</p>
-    <input name="hours" type="number" min="0" max="100" required>
+    <h4>Time to complete</h4>
+    <h5>Amount of days:</h5>
+    <input name="days" type="number" min="0" max="365" value="0" required>
+    <h5>Amount of hours:</h5>
+    <input name="hours" type="number" min="0" max="24" value="0" required>
+    <h5>Amount of minutes:</h5>
+    <input name="minutes" type="number" min="0" max="60" step="5" value="0" required>
     <button type="submit">Add</button>
 </form>
 </body>

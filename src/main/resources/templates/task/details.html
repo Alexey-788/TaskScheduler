@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+</head>
+<body>
+
+<a href="/task/list">Back</a>
+<h5>Task Name:</h5>
+<p th:text="${currentTask.name}"/>
+<h5>Task Text:</h5>
+<p th:text="${currentTask.text}"/>
+<h5>Time left:</h5>
+<!--display time left. An exclamation mark is placed if the deadline has expired-->
+<span th:if="${currentDate.after(currentTask.deadline)}" style="color:red; float:left">!</span>
+<p th:text="'Left '+${daysLeft}+' days, '+${hoursLeft}%24+' hours, '+${minutesLeft}%60+' minutes.'"/>
+<form style="float:left;" action="/task/delete" method="post">
+    <input type="hidden" name="taskId" th:value="${currentTask.id}">
+    <button type="submit">Done</button>
+</form>
+<form action="/task/edit" method="get">
+    <input type="hidden" name="taskId" th:value="${currentTask.id}">
+    <button type="submit">Edit</button>
+</form>
+
+</body>
+</html>

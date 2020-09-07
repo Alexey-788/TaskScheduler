@@ -1,2 +1,5 @@
 /TaskScheduler.iml
 /.idea/
+.settings/
+target/*
+/out/

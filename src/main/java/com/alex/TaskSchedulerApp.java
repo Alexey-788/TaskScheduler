@@ -14,7 +14,6 @@ import java.util.GregorianCalendar;
 
 @SpringBootApplication
 public class TaskSchedulerApp {
-
     private UserRepo userRepo;
     private TaskRepo taskRepo;
 
