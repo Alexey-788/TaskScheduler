@@ -1,6 +1,8 @@
 package com.alex.controller;
 
-import com.alex.domain.Task;
+import com.alex.domain.TaskEntity;
+import com.alex.domain.UserEntity;
+import com.alex.dto.TaskDto;
 import com.alex.repository.TaskRepo;
 import com.alex.repository.UserRepo;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,7 +33,7 @@ public class TaskController {
 
     @GetMapping("/list")
     public String taskList(@AuthenticationPrincipal User user, Model model) {
-        com.alex.domain.User currentUser = getDomainUser(user);
+        UserEntity currentUser = getDomainUser(user);
         model.addAttribute("username", currentUser.getName());
         model.addAttribute("tasks", currentUser.getTasks());
         //passing the current date for comparison with the deadline
@@ -45,24 +47,19 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public String addTask(@AuthenticationPrincipal User user,
-                          @RequestParam String taskName,
-                          @RequestParam String taskText,
-                          @RequestParam int days,
-                          @RequestParam int hours,
-                          @RequestParam int minutes) {
-        taskRepo.save(new Task(taskName, taskText, new GregorianCalendar() {{
-            add(HOUR, hours);
-            add(DATE, days);
-            add(MINUTE, minutes);
+    public String addTask(@AuthenticationPrincipal User user, TaskDto taskDto) {
+        taskRepo.save(new TaskEntity(taskDto.getName(), taskDto.getText(), new GregorianCalendar() {{
+            add(HOUR, taskDto.getHours());
+            add(DATE, taskDto.getDays());
+            add(MINUTE, taskDto.getMinutes());
         }}, getDomainUser(user)));
         return "redirect:/task/list";
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, @AuthenticationPrincipal User user, Model model) {
-        Task currentTask = taskRepo.findById(id).orElse(null);
-        com.alex.domain.User currentUser = getDomainUser(user);
+        TaskEntity currentTask = taskRepo.findById(id).orElse(null);
+        UserEntity currentUser = getDomainUser(user);
 
         if (currentTask == null) {
             model.addAttribute("error", "Task with id " + id + " doesn't exist");
@@ -100,8 +97,8 @@ public class TaskController {
 
     @GetMapping("/edit")
     public String edit(@AuthenticationPrincipal User user, @RequestParam long taskId, Model model) {
-        Task currentTask = taskRepo.findById(taskId).orElse(null);
-        com.alex.domain.User currentUser = getDomainUser(user);
+        TaskEntity currentTask = taskRepo.findById(taskId).orElse(null);
+        UserEntity currentUser = getDomainUser(user);
 
         if (currentTask == null) {
             model.addAttribute("error", "Task with id " + taskId + " doesn't exist");
@@ -116,19 +113,19 @@ public class TaskController {
     }
 
     @PostMapping("edit")
-    public String edit(@RequestParam String taskName, @RequestParam String taskText, @RequestParam long taskId) {
-        Task currentTask = taskRepo.findById(taskId).orElseThrow(
+    public String edit(TaskDto taskDto, @RequestParam long taskId) {
+        TaskEntity currentTask = taskRepo.findById(taskId).orElseThrow(
                 () -> new EntityNotFoundException("Editing not available: Entity with id " + taskId + "not found")
         );
 
-        currentTask.setName(taskName);
-        currentTask.setText(taskText);
+        currentTask.setName(taskDto.getName());
+        currentTask.setText(taskDto.getText());
 
         taskRepo.save(currentTask);
         return "redirect:/task/list";
     }
 
-    private com.alex.domain.User getDomainUser(User user) {
+    private UserEntity getDomainUser(User user) {
         return userRepo.findByLogin(user.getUsername()).orElseThrow(
                 () -> new UsernameNotFoundException("Username " + user.getUsername() + " not found")
         );

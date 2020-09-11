@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Calendar;
 
 @Entity
-public class Task {
+public class TaskEntity {
     @Id
     @SequenceGenerator(name="task_gen", sequenceName="task_seq")
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="task_gen")
@@ -14,16 +14,16 @@ public class Task {
     private Calendar deadline;
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="user_id")
-    private User user;
+    private UserEntity user;
 
-    public Task(String name, String text, Calendar deadline, User user) {
+    public TaskEntity(String name, String text, Calendar deadline, UserEntity user) {
         this.name = name;
         this.text = text;
         this.deadline = deadline;
         this.user = user;
     }
 
-    public Task() {
+    public TaskEntity() {
     }
 
     public long getId() {
@@ -58,11 +58,11 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

@@ -1,14 +1,21 @@
 package com.alex.domain;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import java.util.List;
 
 @Entity
-public class User {
+public class UserEntity {
     @Id
     @SequenceGenerator(name="user_gen", sequenceName="user_seq")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_gen")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="user_gen")
     private long id;
     private String name;
     @Column(unique=true)
@@ -20,9 +27,9 @@ public class User {
     private Status status;
 
     @OneToMany(mappedBy = "user")
-    private List<Task> tasks;
+    private List<TaskEntity> tasks;
 
-    public User(String name, String login, String password, Role role, Status status) {
+    public UserEntity(String name, String login, String password, Role role, Status status) {
         this.name = name;
         this.login = login;
         this.password = password;
@@ -30,7 +37,7 @@ public class User {
         this.status = status;
     }
 
-    public User() {
+    public UserEntity() {
     }
 
     public long getId() {
@@ -81,11 +88,11 @@ public class User {
         this.status = status;
     }
 
-    public List<Task> getTasks() {
+    public List<TaskEntity> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<TaskEntity> tasks) {
         this.tasks = tasks;
     }
 
