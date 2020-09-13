@@ -9,12 +9,24 @@ public class TaskEntity {
     @SequenceGenerator(name="task_gen", sequenceName="task_seq")
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="task_gen")
     private long id;
+    /**
+     * TaskPackage show in which package is TaskEntity. If the TaskPackage is null,
+     * then this means that the task is at the root.
+     */
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="task_package_id")
+    private PackageEntity taskPackage;
     private String name;
     private String text;
     private Calendar deadline;
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="user_id")
     private UserEntity user;
+
+    public TaskEntity(PackageEntity taskPackage, String name, String text, Calendar deadline, UserEntity user) {
+        this(name, text, deadline, user);
+        this.taskPackage = taskPackage;
+    }
 
     public TaskEntity(String name, String text, Calendar deadline, UserEntity user) {
         this.name = name;
@@ -32,6 +44,14 @@ public class TaskEntity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public PackageEntity getTaskPackage() {
+        return taskPackage;
+    }
+
+    public void setTaskPackage(PackageEntity taskPackage) {
+        this.taskPackage = taskPackage;
     }
 
     public String getName() {
